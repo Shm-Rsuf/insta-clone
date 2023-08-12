@@ -1,9 +1,11 @@
 import Image from "next/image";
-import { SearchIcon } from "@heroicons/react/outline";
+import { SearchIcon, PlusCircleIcon } from "@heroicons/react/outline";
+import { HomeIcon } from "@heroicons/react/solid";
 
 const Header = () => {
   return (
-    <div className="flex justify-between items-center max-w-6xl">
+    <div className="flex justify-between items-center max-w-6xl mx-4 lg:mx-auto">
+      {/* LEFT */}
       <div className="w-24 h-24 relative hidden lg:inline-grid cursor-pointer">
         <Image
           src="https://logos-download.com/wp-content/uploads/2016/03/Instagram_Logo_2016.png"
@@ -32,7 +34,15 @@ const Header = () => {
         />
       </div>
       {/* RIGHT */}
-      <h2>Right side</h2>
+      <div className=" flex items-center gap-4">
+        <HomeIcon className="hidden sm:inline-flex h-6 cursor-pointer hover:scale-x-125 transition-transform duration-300 ease-out" />
+        <PlusCircleIcon className="h-6 cursor-pointer hover:scale-x-125 transition-transform duration-300 ease-out" />
+        <img
+          src="https://cdn-icons-png.flaticon.com/512/219/219983.png"
+          alt="user image"
+          className="w-10 h-10 rounded-full cursor-pointer"
+        />
+      </div>
     </div>
   );
 };
