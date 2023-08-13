@@ -44,8 +44,8 @@ const Post = ({ post }) => {
         <EmojiHappyIcon className="h-7" />
         <input
           type="text"
-          placeholder="enter your comment"
-          className="border-none flex-1 focus:ring-0"
+          placeholder="Enter your comment..."
+          className="border-none flex-1 focus:ring-0 placeholder:text-gray-400"
         />
         <button
           type="submit"
