@@ -3,6 +3,7 @@ import {
   HeartIcon,
   ChatIcon,
   BookmarkIcon,
+  EmojiHappyIcon,
 } from "@heroicons/react/solid";
 
 const Post = ({ post }) => {
@@ -33,6 +34,26 @@ const Post = ({ post }) => {
         </div>
         <BookmarkIcon className="post_btn" />
       </div>
+      {/* POST COMMENTS */}
+      <p className="p-5 truncate">
+        <span className="font-semibold mr-2">{username}</span>
+        {caption}
+      </p>
+      {/* POST INPUT BOX */}
+      <form className="flex items-center p-4">
+        <EmojiHappyIcon className="h-7" />
+        <input
+          type="text"
+          placeholder="enter your comment"
+          className="border-none flex-1 focus:ring-0"
+        />
+        <button
+          type="submit"
+          className="text-blue-400 font-semibold tracking-wide"
+        >
+          Post
+        </button>
+      </form>
     </div>
   );
 };
