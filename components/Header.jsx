@@ -11,16 +11,20 @@ const Header = () => {
           <Image
             src="https://logos-download.com/wp-content/uploads/2016/03/Instagram_Logo_2016.png"
             alt="instagram image"
-            layout="fill"
-            className="object-contain"
+            width={100}
+            height={60}
+            className="object-contain w-full h-full"
+            priority
           />
         </div>
         <div className="w-10 h-16 relative lg:hidden cursor-pointer">
           <Image
             src="https://upload.wikimedia.org/wikipedia/commons/9/95/Instagram_logo_2022.svg"
             alt="instagram image"
-            layout="fill"
-            className="object-contain"
+            width={100}
+            height={60}
+            className="object-contain w-full h-full"
+            priority
           />
         </div>
         {/* MIDDLE */}
