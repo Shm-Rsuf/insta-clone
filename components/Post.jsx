@@ -1,4 +1,9 @@
-import { DotsHorizontalIcon } from "@heroicons/react/solid";
+import {
+  DotsHorizontalIcon,
+  HeartIcon,
+  ChatIcon,
+  BookmarkIcon,
+} from "@heroicons/react/solid";
 
 const Post = ({ post }) => {
   const { id, username, userImg, img, caption } = post;
@@ -20,6 +25,14 @@ const Post = ({ post }) => {
       <picture>
         <img src={img} alt={username} className="object-cover w-full" />
       </picture>
+      {/* POST BUTTONS */}
+      <div className="flex justify-between items-center px-4 pt-4">
+        <div className="flex gap-4">
+          <HeartIcon className="post_btn" />
+          <ChatIcon className="post_btn" />
+        </div>
+        <BookmarkIcon className="post_btn" />
+      </div>
     </div>
   );
 };
