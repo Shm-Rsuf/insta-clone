@@ -44,7 +44,7 @@ const Header = () => {
           <PlusCircleIcon className="h-6 cursor-pointer hover:scale-x-125 transition-transform duration-300 ease-out" />
           <picture>
             <img
-              src="https://cdn-icons-png.flaticon.com/512/219/219983.png"
+              src="https://res.cloudinary.com/dlc8v0etj/image/upload/v1675931938/cover1_vtesoo.jpg"
               alt="user image"
               className="w-10 h-10 rounded-full cursor-pointer"
             />
