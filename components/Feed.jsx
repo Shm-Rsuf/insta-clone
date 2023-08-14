@@ -5,16 +5,16 @@ import MiniProfile from "./MiniProfile";
 
 const Feed = () => {
   return (
-    <main>
-      <section>
+    <main className="grid grid-cols-1 md:grid-cols-3 md:max-w-6xl mx-auto">
+      <section className="md:col-span-2">
         {/* stories */}
         <Stories />
         {/* posts */}
         <Posts />
       </section>
 
-      <section className="hidden md:inline-grid">
-        <div className="fixed w-96">
+      <section className="hidden md:inline-grid md:col-span-1">
+        <div className="">
           {/* mini profile */}
           <MiniProfile />
           {/* suggession */}
