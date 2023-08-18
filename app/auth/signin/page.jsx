@@ -1,11 +1,8 @@
 "use client";
 import Header from "@/components/Header";
 import { signIn } from "next-auth/react";
-import { useSession } from "next-auth/react";
 
 const SignInPage = () => {
-  const { data: session } = useSession();
-
   return (
     <>
       <Header />

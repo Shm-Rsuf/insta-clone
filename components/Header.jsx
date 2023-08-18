@@ -1,8 +1,14 @@
+"use client";
 import Image from "next/image";
 import { SearchIcon, PlusCircleIcon } from "@heroicons/react/outline";
 import { HomeIcon } from "@heroicons/react/solid";
+import { signIn, signOut, useSession } from "next-auth/react";
 
 const Header = () => {
+  const { data: session } = useSession();
+
+  console.log(session);
+
   return (
     <header className="shadow-md border-b sticky top-0 bg-white z-50">
       <div className="flex justify-between items-center max-w-6xl mx-4 lg:mx-auto">
@@ -41,14 +47,21 @@ const Header = () => {
         {/* RIGHT */}
         <div className=" flex items-center gap-4">
           <HomeIcon className="hidden sm:inline-flex h-6 cursor-pointer hover:scale-x-125 transition-transform duration-300 ease-out" />
-          <PlusCircleIcon className="h-6 cursor-pointer hover:scale-x-125 transition-transform duration-300 ease-out" />
-          <picture>
-            <img
-              src="https://res.cloudinary.com/dlc8v0etj/image/upload/v1675931938/cover1_vtesoo.jpg"
-              alt="user image"
-              className="w-10 h-10 rounded-full cursor-pointer"
-            />
-          </picture>
+          {session ? (
+            <>
+              <PlusCircleIcon className="h-6 cursor-pointer hover:scale-x-125 transition-transform duration-300 ease-out" />
+              <picture>
+                <img
+                  src={session?.user?.image}
+                  alt={session.user.name}
+                  className="w-10 h-10 rounded-full cursor-pointer"
+                  onClick={signOut}
+                />
+              </picture>
+            </>
+          ) : (
+            <button onClick={signIn}>Sign in</button>
+          )}
         </div>
       </div>
     </header>

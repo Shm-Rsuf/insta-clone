@@ -9,7 +9,7 @@ const handler = NextAuth({
     }),
   ],
   pages: {
-    signin: "/auth/signin",
+    signIn: "/auth/signin",
   },
   secret: process.env.JWT_SECRET,
 });
