@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 const Suggestions = () => {
   const [suggestions, setSuggestions] = useState([]);
 
-  console.log("suggestions =", suggestions);
   useEffect(() => {
     const suggestions = minifaker.array(5, (i) => ({
       username: minifaker.username({ locale: "en" }).toLowerCase(),

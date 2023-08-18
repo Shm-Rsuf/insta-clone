@@ -1,4 +1,6 @@
+"use client";
 import Header from "@/components/Header";
+import { signIn } from "next-auth/react";
 
 const SignInPage = () => {
   return (
@@ -11,7 +13,9 @@ const SignInPage = () => {
             alt="Instagram"
           />
         </picture>
-        <div className=""></div>
+        <div className="">
+          <button onClick={() => signIn("google")}>sign in</button>
+        </div>
       </div>
     </>
   );
