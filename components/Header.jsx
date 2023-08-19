@@ -7,8 +7,6 @@ import { signIn, signOut, useSession } from "next-auth/react";
 const Header = () => {
   const { data: session } = useSession();
 
-  console.log(session);
-
   return (
     <header className="shadow-md border-b sticky top-0 bg-white z-50">
       <div className="flex justify-between items-center max-w-6xl mx-4 lg:mx-auto">
@@ -53,7 +51,7 @@ const Header = () => {
               <picture>
                 <img
                   src={session?.user?.image}
-                  alt={session.user.name}
+                  alt={session?.user?.name}
                   className="w-10 h-10 rounded-full cursor-pointer"
                   onClick={signOut}
                 />
