@@ -52,7 +52,7 @@ const Header = () => {
             <>
               <PlusCircleIcon
                 onClick={() => setOpen(!open)}
-                className="h-6 cursor-pointer hover:scale-x-125 transition-transform duration-300 ease-out"
+                className="h-6 cursor-pointer active:scale-x-125 transition-transform duration-300 ease-out"
               />
               <picture>
                 <img
