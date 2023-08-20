@@ -12,7 +12,6 @@ const UploadModal = () => {
 
   /* addImageToPost */
   const addImageToPost = (event) => {
-    // e.preventDefault();
     const reader = new FileReader();
     if (event.target.files[0]) {
       reader.readAsDataURL(event.target.files[0]);
