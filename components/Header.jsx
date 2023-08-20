@@ -51,7 +51,7 @@ const Header = () => {
           {session ? (
             <>
               <PlusCircleIcon
-                onClick={() => setOpen(true)}
+                onClick={() => setOpen(!open)}
                 className="h-6 cursor-pointer hover:scale-x-125 transition-transform duration-300 ease-out"
               />
               <picture>
