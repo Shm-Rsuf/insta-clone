@@ -6,15 +6,38 @@ import {
   BookmarkIcon,
   EmojiHappyIcon,
 } from "@heroicons/react/solid";
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  onSnapshot,
+  orderBy,
+  query,
+  serverTimestamp,
+} from "firebase/firestore";
 
 import { useSession } from "next-auth/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+import Moment from "react-moment";
 
 const Post = ({ id, username, userImg, img, caption }) => {
   const { data: session } = useSession();
 
   const [comment, setComment] = useState("");
+  const [comments, setComments] = useState([]);
+
+  useEffect(() => {
+    const unsubscribe = onSnapshot(
+      query(
+        collection(db, "posts", id, "comments"),
+        orderBy("timesTamp", "desc")
+      ),
+      (snapshot) => {
+        setComments(snapshot.docs);
+      }
+    );
+    return unsubscribe;
+  }, [id]);
 
   /* sendComment */
   const sendComment = async (e) => {
@@ -23,7 +46,7 @@ const Post = ({ id, username, userImg, img, caption }) => {
     await addDoc(collection(db, "posts", id, "comments"), {
       comment,
       username: session?.user.name.split(" ").join("").toLocaleLowerCase(),
-      profileImg: session?.user.image,
+      userImg: session?.user.image,
       timesTamp: serverTimestamp(),
     });
 
@@ -63,6 +86,26 @@ const Post = ({ id, username, userImg, img, caption }) => {
         <span className="font-semibold mr-2">{username}</span>
         {caption}
       </p>
+
+      {comments.length > 0 && (
+        <div className="mx-10 max-h-24 overflow-y-scroll scrollbar-none">
+          {comments.map((comment) => (
+            <div className="flex items-center gap-2 mb-2" key={comment.id}>
+              <picture>
+                <img
+                  src={comment.data().userImg}
+                  alt="user-image"
+                  className="h-7 rounded-full object-cover"
+                />
+              </picture>
+              <p className="font-semibold">{comment.data().username}</p>
+              <p className="flex-1 truncate">{comment.data().comment}</p>
+              <Moment fromNow>{comment.data().timesTamp?.toDate()}</Moment>
+            </div>
+          ))}
+        </div>
+      )}
+
       {/* POST INPUT BOX */}
       {session && (
         <form className="flex items-center p-4">
