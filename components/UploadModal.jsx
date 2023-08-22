@@ -1,13 +1,17 @@
 "use client";
+import { useRef, useState } from "react";
+import { useSession } from "next-auth/react";
+import Modal from "react-modal";
 import { modalState } from "@/atom/modalAtom";
 import { useRecoilState } from "recoil";
 import { CameraIcon } from "@heroicons/react/outline";
-import Modal from "react-modal";
-import { useRef, useState } from "react";
-import { addDoc, collection } from "firebase/firestore";
-import { db } from "@/firebase";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { db, storage } from "@/firebase";
+import { ref, uploadString } from "firebase/storage";
 
 const UploadModal = () => {
+  const { data: session } = useSession();
+  console.log("session =", session);
   const [open, setOpen] = useRecoilState(modalState);
   const filePickerRef = useRef(null);
   const captionRef = useRef(null);
@@ -23,7 +27,12 @@ const UploadModal = () => {
 
     const docRef = await addDoc(collection(db, "posts"), {
       caption: captionRef.current.value,
+      username: session?.user.name.split(" ").join("").toLocaleLowerCase(),
+      profileImg: session?.user.image,
+      timesTamp: serverTimestamp(),
     });
+    const imageRef = ref(storage, `posts/${docRef.id}/image`);
+    await uploadString(imageRef, selectedFile, "data_url");
   };
 
   /* addImageToPost */
@@ -42,6 +51,7 @@ const UploadModal = () => {
       {open && (
         <Modal
           isOpen={open}
+          ariaHideApp={false}
           onRequestClose={() => {
             setOpen(!open);
             setSelectedFile(!selectedFile);
