@@ -5,9 +5,15 @@ import Modal from "react-modal";
 import { modalState } from "@/atom/modalAtom";
 import { useRecoilState } from "recoil";
 import { CameraIcon } from "@heroicons/react/outline";
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  serverTimestamp,
+  updateDoc,
+} from "firebase/firestore";
 import { db, storage } from "@/firebase";
-import { ref, uploadString } from "firebase/storage";
+import { getDownloadURL, ref, uploadString } from "firebase/storage";
 
 const UploadModal = () => {
   const { data: session } = useSession();
@@ -32,7 +38,17 @@ const UploadModal = () => {
       timesTamp: serverTimestamp(),
     });
     const imageRef = ref(storage, `posts/${docRef.id}/image`);
-    await uploadString(imageRef, selectedFile, "data_url");
+    await uploadString(imageRef, selectedFile, "data_url").then(
+      async (snapshot) => {
+        const downloadUrl = await getDownloadURL(imageRef);
+        await updateDoc(doc(db, "posts", docRef.id), {
+          image: downloadUrl,
+        });
+      }
+    );
+    setLoading(false);
+    setOpen(false);
+    setSelectedFile(null);
   };
 
   /* addImageToPost */
