@@ -4,11 +4,27 @@ import { useRecoilState } from "recoil";
 import { CameraIcon } from "@heroicons/react/outline";
 import Modal from "react-modal";
 import { useRef, useState } from "react";
+import { addDoc, collection } from "firebase/firestore";
+import { db } from "@/firebase";
 
 const UploadModal = () => {
   const [open, setOpen] = useRecoilState(modalState);
   const filePickerRef = useRef(null);
+  const captionRef = useRef(null);
+
   const [selectedFile, setSelectedFile] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  /* uploadPost */
+  const uploadPost = async () => {
+    if (loading) return;
+
+    setLoading(true);
+
+    const docRef = await addDoc(collection(db, "posts"), {
+      caption: captionRef.current.value,
+    });
+  };
 
   /* addImageToPost */
   const addImageToPost = (event) => {
@@ -60,9 +76,11 @@ const UploadModal = () => {
               maxLength={150}
               placeholder="please enter your caption"
               className="border-none w-full text-center focus:ring-0"
+              ref={captionRef}
             />
             <button
-              disabled
+              onClick={uploadPost}
+              disabled={!selectedFile || loading}
               className="w-full bg-rose-500 text-white p-2 shadow-md hover:brightness-125 transition-colors duration-200 disabled:bg-gray-200 disabled:cursor-not-allowed disabled:hover:brightness-100"
             >
               Upload Post
