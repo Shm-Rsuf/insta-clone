@@ -47,7 +47,7 @@ const Header = () => {
         </div>
         {/* RIGHT */}
         <div className=" flex items-center gap-4">
-          <HomeIcon className="hidden sm:inline-flex h-6 cursor-pointer hover:scale-x-125 transition-transform duration-300 ease-out" />
+          <HomeIcon className="hidden sm:inline-flex h-6 cursor-pointer active:scale-x-125 transition-transform duration-300 ease-out" />
           {session ? (
             <>
               <PlusCircleIcon

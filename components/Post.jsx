@@ -6,8 +6,7 @@ import {
   EmojiHappyIcon,
 } from "@heroicons/react/solid";
 
-const Post = ({ post }) => {
-  const { id, username, userImg, img, caption } = post;
+const Post = ({ id, username, userImg, img, caption }) => {
   return (
     <div className="bg-white my-8 border rounded-md">
       {/* POST HEADER */}

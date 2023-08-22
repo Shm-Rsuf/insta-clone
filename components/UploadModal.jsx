@@ -17,7 +17,6 @@ import { getDownloadURL, ref, uploadString } from "firebase/storage";
 
 const UploadModal = () => {
   const { data: session } = useSession();
-  console.log("session =", session);
   const [open, setOpen] = useRecoilState(modalState);
   const filePickerRef = useRef(null);
   const captionRef = useRef(null);

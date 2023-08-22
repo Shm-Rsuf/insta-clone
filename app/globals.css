@@ -4,6 +4,6 @@
 
 @layer components {
   .post_btn {
-    @apply h-7 hover:scale-125 transition-transform duration-200 cursor-pointer ease-out;
+    @apply h-7 active:scale-125 transition-transform duration-200 cursor-pointer ease-out;
   }
 }
