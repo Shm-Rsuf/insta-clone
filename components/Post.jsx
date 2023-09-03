@@ -5,14 +5,17 @@ import {
   ChatIcon,
   BookmarkIcon,
   EmojiHappyIcon,
-} from "@heroicons/react/solid";
+} from "@heroicons/react/outline";
+import { HeartIcon as HeartIconSolid } from "@heroicons/react/solid";
 import {
   addDoc,
   collection,
+  doc,
   onSnapshot,
   orderBy,
   query,
   serverTimestamp,
+  setDoc,
 } from "firebase/firestore";
 
 import { useSession } from "next-auth/react";
@@ -22,9 +25,10 @@ import Moment from "react-moment";
 
 const Post = ({ id, username, userImg, img, caption }) => {
   const { data: session } = useSession();
-
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState([]);
+  const [hasLiked, setHasLiked] = useState(false);
+  console.log("first", session.user.email);
 
   useEffect(() => {
     const unsubscribe = onSnapshot(
@@ -53,6 +57,14 @@ const Post = ({ id, username, userImg, img, caption }) => {
     setComment("");
   };
 
+  /* likePostHandler */
+  const likePostHandler = async () => {
+    console.log("clicked");
+    await setDoc(doc(db, "posts", id, "likes", session.user.email), {
+      username: session?.user.name.split(" ").join("").toLocaleLowerCase(),
+    });
+  };
+
   return (
     <div className="bg-white my-8 border rounded-md">
       {/* POST HEADER */}
@@ -75,7 +87,14 @@ const Post = ({ id, username, userImg, img, caption }) => {
       {session && (
         <div className="flex justify-between items-center px-4 pt-4">
           <div className="flex gap-4">
-            <HeartIcon className="post_btn" />
+            {hasLiked ? (
+              <HeartIconSolid
+                onClick={likePostHandler}
+                className="post_btn text-rose-500"
+              />
+            ) : (
+              <HeartIcon onClick={likePostHandler} className="post_btn" />
+            )}
             <ChatIcon className="post_btn" />
           </div>
           <BookmarkIcon className="post_btn" />
