@@ -10,6 +10,7 @@ import { HeartIcon as HeartIconSolid } from "@heroicons/react/solid";
 import {
   addDoc,
   collection,
+  deleteDoc,
   doc,
   onSnapshot,
   orderBy,
@@ -27,8 +28,8 @@ const Post = ({ id, username, userImg, img, caption }) => {
   const { data: session } = useSession();
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState([]);
+  const [likes, setLikes] = useState([]);
   const [hasLiked, setHasLiked] = useState(false);
-  console.log("first", session.user.email);
 
   useEffect(() => {
     const unsubscribe = onSnapshot(
@@ -57,12 +58,33 @@ const Post = ({ id, username, userImg, img, caption }) => {
     setComment("");
   };
 
+  useEffect(() => {
+    const unsubscribe = onSnapshot(
+      collection(db, "posts", id, "likes"),
+      (snapshot) => setLikes(snapshot.doc)
+    );
+    return unsubscribe;
+  }, [id]);
+
+  useEffect(() => {
+    if (likes && session?.user?.email) {
+      const hasLikedPost = likes.findIndex(
+        (like) => like.id === session.user.email
+      );
+
+      setHasLiked(hasLikedPost !== -1);
+    }
+  }, [likes, session?.user.email]);
+
   /* likePostHandler */
   const likePostHandler = async () => {
-    console.log("clicked");
-    await setDoc(doc(db, "posts", id, "likes", session.user.email), {
-      username: session?.user.name.split(" ").join("").toLocaleLowerCase(),
-    });
+    if (hasLiked) {
+      await deleteDoc(doc(db, "posts", id, "likes", session?.user.email));
+    } else {
+      await setDoc(doc(db, "posts", id, "likes", session?.user.email), {
+        username: session?.user.name.split(" ").join("").toLocaleLowerCase(),
+      });
+    }
   };
 
   return (
