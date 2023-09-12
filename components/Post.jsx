@@ -131,7 +131,10 @@ const Post = ({ id, username, userImg, img, caption }) => {
       {comments.length > 0 && (
         <div className="mx-10 max-h-24 overflow-y-scroll scrollbar-none">
           {comments.map((comment) => (
-            <div className="flex items-center gap-2 mb-2" key={comment.id}>
+            <div
+              className="flex items-center gap-2 mb-2"
+              key={comment.data().id}
+            >
               <picture>
                 <img
                   src={comment.data().userImg}
